@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -18,9 +20,9 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     private final int WIDTH = 400;
     private final int HEIGHT = 400;
 
-    private final int MAX_SNAKE_LENGTH = 400;
-    private final int[] x_SNAKE = new int[MAX_SNAKE_LENGTH];
-    private final int[] y_SNAKE = new int[MAX_SNAKE_LENGTH];
+    private final List<Integer> x_SNAKE = new ArrayList<Integer>();
+    private final List<Integer> y_SNAKE = new ArrayList<Integer>();
+
     private final int SQUARE_SIZE = 20;
     private final int RAND_POS = 19;
 
@@ -60,11 +62,10 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     }
 
     private void initGame() {
-        score = 0;
         snakeLength = 5;
         for (int i = 0; i < snakeLength; i++) {
-            x_SNAKE[i] = 100 - i * SQUARE_SIZE;
-            y_SNAKE[i] = 100;
+            x_SNAKE.add(100 - i * SQUARE_SIZE);
+            y_SNAKE.add(100);
         }
         strawberryLocation();
         appleLocation();
@@ -108,9 +109,9 @@ public class Board extends JPanel implements ActionListener, KeyListener {
 
             for (int i = 0; i < snakeLength; i++) {
                 if (i == 0) {
-                    g.drawImage(iSnakeHead, x_SNAKE[i], y_SNAKE[i], this);
+                    g.drawImage(iSnakeHead, x_SNAKE.get(i), y_SNAKE.get(i), this);
                 } else {
-                    g.drawImage(iSnake, x_SNAKE[i], y_SNAKE[i], this);
+                    g.drawImage(iSnake, x_SNAKE.get(i), y_SNAKE.get(i), this);
                 }
             }
             if (score >= 390) {
@@ -142,52 +143,83 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     }
 
     public void strawberryLocation() {
-        int x = (int) (Math.random() * RAND_POS);
-        x_Strawberry = x * SQUARE_SIZE;
-        int y = (int) (Math.random() * RAND_POS);
-        y_Strawberry = y * SQUARE_SIZE;
+        boolean flag = false;
+        while (!flag) {
+            int x = (int) (Math.random() * RAND_POS);
+            x_Strawberry = x * SQUARE_SIZE;
+            int y = (int) (Math.random() * RAND_POS);
+            y_Strawberry = y * SQUARE_SIZE;
+
+            if ((x_SNAKE.contains(x_Strawberry)) && (y_SNAKE.contains(y_Strawberry))) {
+                continue;
+            } else {
+                flag = true;
+            }
+        }
     }
 
     public void appleLocation() {
-        int x = (int) (Math.random() * RAND_POS);
-        x_Apple = x * SQUARE_SIZE;
-        int y = (int) (Math.random() * RAND_POS);
-        y_Apple = y * SQUARE_SIZE;
+        boolean flag = false;
+        while (!flag) {
+            int x = (int) (Math.random() * RAND_POS);
+            x_Apple = x * SQUARE_SIZE;
+            int y = (int) (Math.random() * RAND_POS);
+            y_Apple = y * SQUARE_SIZE;
+
+            if ((x_SNAKE.contains(x_Apple)) && (y_SNAKE.contains(y_Apple))) {
+                continue;
+            } else {
+                flag = true;
+            }
+
+        }
+
     }
 
     public void mouseLocation() {
-        int x = (int) (Math.random() * RAND_POS);
-        x_Mouse = x * SQUARE_SIZE;
-        int y = (int) (Math.random() * RAND_POS);
-        y_Mouse = y * SQUARE_SIZE;
+        boolean flag = false;
+        while (!flag) {
+            int x = (int) (Math.random() * RAND_POS);
+            x_Mouse = x * SQUARE_SIZE;
+            int y = (int) (Math.random() * RAND_POS);
+            y_Mouse = y * SQUARE_SIZE;
+
+            if ((x_SNAKE.contains(x_Mouse)) && (y_SNAKE.contains(y_Mouse))) {
+                continue;
+            } else {
+                flag = true;
+            }
+        }
     }
 
     public void move() {
-        for (int i = snakeLength; i > 0; i--) {
-            x_SNAKE[i] = x_SNAKE[(i - 1)];
-            y_SNAKE[i] = y_SNAKE[(i - 1)];
+        for (int i = snakeLength - 1; i > 0; i--) {
+            x_SNAKE.set(i, x_SNAKE.get(i - 1));
+            y_SNAKE.set(i, y_SNAKE.get(i - 1));
         }
 
         if (leftDirection) {
-            x_SNAKE[0] -= SQUARE_SIZE;
+            x_SNAKE.set(0, x_SNAKE.get(0) - SQUARE_SIZE);
         }
 
         if (rightDirection) {
-            x_SNAKE[0] += SQUARE_SIZE;
+            x_SNAKE.set(0, x_SNAKE.get(0) + SQUARE_SIZE);
         }
 
         if (upDirection) {
-            y_SNAKE[0] -= SQUARE_SIZE;
+            y_SNAKE.set(0, y_SNAKE.get(0) - SQUARE_SIZE);
         }
 
         if (downDirection) {
-            y_SNAKE[0] += SQUARE_SIZE;
+            y_SNAKE.set(0, y_SNAKE.get(0) + SQUARE_SIZE);
         }
     }
 
     public void checkStrawberry() {
-        if ((x_SNAKE[0] == x_Strawberry) && (y_SNAKE[0] == y_Strawberry)) {
-            snakeLength += strawberryPoint;
+        if ((x_SNAKE.get(0) == x_Strawberry) && (y_SNAKE.get(0) == y_Strawberry)) {
+            snakeLength++;
+            x_SNAKE.add(x_SNAKE.get(1));
+            y_SNAKE.add(y_SNAKE.get(1));
             strawberryLocation();
             score += strawberryPoint;
             snake.setScore(score);
@@ -195,9 +227,11 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     }
 
     public void checkApple() {
-        if ((x_SNAKE[0] == x_Apple) && (y_SNAKE[0] == y_Apple)) {
+        if ((x_SNAKE.get(0) == x_Apple) && (y_SNAKE.get(0) == y_Apple)) {
             if (score % 45 == 0) {
-                snakeLength += applePoint;
+                snakeLength++;
+                x_SNAKE.add(x_SNAKE.get(1));
+                y_SNAKE.add(y_SNAKE.get(1));
                 appleLocation();
                 score += applePoint;
                 snake.setScore(score);
@@ -206,9 +240,11 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     }
 
     public void checkMouse() {
-        if ((x_SNAKE[0] == x_Mouse) && (y_SNAKE[0] == y_Mouse)) {
+        if ((x_SNAKE.get(0) == x_Mouse) && (y_SNAKE.get(0) == y_Mouse)) {
             if (score % 150 == 0) {
-                snakeLength += mousePoint;
+                snakeLength++;
+                x_SNAKE.add(x_SNAKE.get(1));
+                y_SNAKE.add(y_SNAKE.get(1));
                 mouseLocation();
                 score += mousePoint;
                 snake.setScore(score);
@@ -217,21 +253,21 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     }
 
     public void checkCollision() {
-        for (int i = snakeLength; i > 0; i--) {
-            if ((i > 2) && (x_SNAKE[0] == x_SNAKE[i]) && (y_SNAKE[0] == y_SNAKE[i])) {
+        for (int i = 1; i < snakeLength; i++) {
+            if ((x_SNAKE.get(i).equals(x_SNAKE.get(0))) && (y_SNAKE.get(i).equals(y_SNAKE.get(0)))) {
                 gameStatus = false;
             }
         }
-        if (x_SNAKE[0] >= WIDTH) {
+        if (x_SNAKE.get(0) >= WIDTH) {
             gameStatus = false;
         }
-        if (x_SNAKE[0] < 0) {
+        if (x_SNAKE.get(0) < 0) {
             gameStatus = false;
         }
-        if (y_SNAKE[0] >= HEIGHT) {
+        if (y_SNAKE.get(0) >= HEIGHT) {
             gameStatus = false;
         }
-        if (y_SNAKE[0] < 0) {
+        if (y_SNAKE.get(0) < 0) {
             gameStatus = false;
         }
         if (!gameStatus) {
@@ -253,22 +289,18 @@ public class Board extends JPanel implements ActionListener, KeyListener {
 
     public void newGame() {
         score = 0;
-        for (int i = 0; i < snakeLength; i++) {
-            x_SNAKE[i] = 0;
-            y_SNAKE[i] = 0;
-        }
-        
+        x_SNAKE.clear();
+        y_SNAKE.clear();
+
         timer.start();
         gameStatus = true;
         snakeLength = 5;
-        x_SNAKE[0] = 0;
-        y_SNAKE[0] = 0;
 
         for (int i = 0; i < snakeLength; i++) {
-            x_SNAKE[i] = 100 - i * SQUARE_SIZE;
-            y_SNAKE[i] = 100;
+            x_SNAKE.add(100 - i * SQUARE_SIZE);
+            y_SNAKE.add(100);
         }
-        
+
         leftDirection = false;
         rightDirection = true;
         upDirection = false;

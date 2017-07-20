@@ -124,12 +124,13 @@ public class Snake extends JFrame implements ActionListener {
             board.getTimer().stop();
             board.requestFocus();
         } else if (e.getSource() == newGame) {
+            setScore(0);
             board.newGame();
             board.requestFocus();
             repaint();
         } else if (e.getSource() == endGame) {
             board.getTimer().stop();
-            dispose();
+            System.exit(0);
         }
     }
 }
