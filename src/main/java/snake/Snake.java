@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 public class Snake extends JFrame implements ActionListener {
 
     private Board board;
-
     private JButton startGame;
     private JButton pause;
     private JButton newGame;
@@ -21,6 +20,7 @@ public class Snake extends JFrame implements ActionListener {
         setWindowProperties();
         initButtons();
         setProperties();
+        addListeners();
     }
 
     private void initButtons() {
@@ -60,17 +60,14 @@ public class Snake extends JFrame implements ActionListener {
         startGame.setBackground(Color.GRAY);
         startGame.setForeground(Color.yellow);
         startGame.setBounds(5, 160, 100, 20);
-        startGame.addActionListener(this);
 
         pause.setBackground(Color.GRAY);
         pause.setForeground(Color.yellow);
         pause.setBounds(5, 185, 100, 20);
-        pause.addActionListener(this);
 
         newGame.setBackground(Color.gray);
         newGame.setForeground(Color.yellow);
         newGame.setBounds(5, 210, 100, 20);
-        newGame.addActionListener(this);
 
         score.setBackground(Color.gray);
         score.setForeground(Color.red);
@@ -98,10 +95,15 @@ public class Snake extends JFrame implements ActionListener {
         endGame.setBackground(Color.gray);
         endGame.setForeground(Color.yellow);
         endGame.setBounds(5, 365, 100, 30);
-        endGame.addActionListener(this);
 
         board.setBounds(110, 0, 400, 400);
+    }
 
+    private void addListeners() {
+        startGame.addActionListener(this);
+        pause.addActionListener(this);
+        newGame.addActionListener(this);
+        endGame.addActionListener(this);
     }
 
     private void setWindowProperties() {
