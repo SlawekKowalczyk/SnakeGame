@@ -18,13 +18,12 @@ public class Snake extends JFrame implements ActionListener {
     private JLabel logo, apple, strawberry, mouse;
 
     public Snake() {
-        setTitle("Snake");
-        setSize(515, 428);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(null);
-        setResizable(false);
-        setLocationRelativeTo(null);
+        setWindowProperties();
 
+        initButtons();
+    }
+
+    private void initButtons() {
         logo = new JLabel();
         logo.setIcon(new ImageIcon(Constans.LOGO));
         logo.setBounds(5, 5, 100, 150);
@@ -99,6 +98,15 @@ public class Snake extends JFrame implements ActionListener {
         add(score);
         add(pause);
         add(endGame);
+    }
+
+    private void setWindowProperties() {
+        setTitle("Snake");
+        setSize(515, 428);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(null);
+        setResizable(false);
+        setLocationRelativeTo(null);
     }
 
     public void setScore(int score) {
