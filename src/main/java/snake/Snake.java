@@ -19,71 +19,24 @@ public class Snake extends JFrame implements ActionListener {
 
     public Snake() {
         setWindowProperties();
-
         initButtons();
+        setProperties();
     }
 
     private void initButtons() {
         logo = new JLabel();
-        logo.setIcon(new ImageIcon(Constans.LOGO));
-        logo.setBounds(5, 5, 100, 150);
-
         startGame = new JButton("Uruchom");
-        startGame.setBackground(Color.GRAY);
-        startGame.setForeground(Color.yellow);
-        startGame.setBounds(5, 160, 100, 20);
-        startGame.addActionListener(this);
-
         pause = new JButton("Pauza");
-        pause.setBackground(Color.GRAY);
-        pause.setForeground(Color.yellow);
-        pause.setBounds(5, 185, 100, 20);
-        pause.addActionListener(this);
-
         newGame = new JButton("Nowa gra");
-        newGame.setBackground(Color.gray);
-        newGame.setForeground(Color.yellow);
-        newGame.setBounds(5, 210, 100, 20);
-        newGame.addActionListener(this);
-
         score = new JLabel();
-        score.setBackground(Color.gray);
-        score.setForeground(Color.red);
-        score.setBounds(5, 235, 100, 20);
-        score.setText("Wynik: 0pkt");
-
         strawberry = new JLabel();
-        strawberry.setIcon(new ImageIcon(Constans.STRAWBERRY));
-        strawberry.setBounds(5, 265, 20, 20);
-
         pointsStrawberry = new JLabel();
-        pointsStrawberry.setText(" +5pkt");
-        pointsStrawberry.setBounds(30, 265, 50, 20);
-
         apple = new JLabel();
-        apple.setIcon(new ImageIcon(Constans.APPLE));
-        apple.setBounds(5, 290, 20, 20);
-
         pointsApple = new JLabel();
-        pointsApple.setText(" +25pkt");
-        pointsApple.setBounds(30, 290, 50, 20);
-
         mouse = new JLabel();
-        mouse.setIcon(new ImageIcon(Constans.MOUSE));
-        mouse.setBounds(5, 315, 20, 20);
-
         pointsMouse = new JLabel();
-        pointsMouse.setText(" + 50pkt");
-        pointsMouse.setBounds(30, 315, 60, 20);
-
         endGame = new JButton("Koniec");
-        endGame.setBackground(Color.gray);
-        endGame.setForeground(Color.yellow);
-        endGame.setBounds(5, 365, 100, 30);
-        endGame.addActionListener(this);
-
         board = new Board(this);
-        board.setBounds(110, 0, 400, 400);
 
         add(board);
         add(logo);
@@ -98,6 +51,57 @@ public class Snake extends JFrame implements ActionListener {
         add(score);
         add(pause);
         add(endGame);
+    }
+
+    private void setProperties() {
+        logo.setIcon(new ImageIcon(Constans.LOGO));
+        logo.setBounds(5, 5, 100, 150);
+
+        startGame.setBackground(Color.GRAY);
+        startGame.setForeground(Color.yellow);
+        startGame.setBounds(5, 160, 100, 20);
+        startGame.addActionListener(this);
+
+        pause.setBackground(Color.GRAY);
+        pause.setForeground(Color.yellow);
+        pause.setBounds(5, 185, 100, 20);
+        pause.addActionListener(this);
+
+        newGame.setBackground(Color.gray);
+        newGame.setForeground(Color.yellow);
+        newGame.setBounds(5, 210, 100, 20);
+        newGame.addActionListener(this);
+
+        score.setBackground(Color.gray);
+        score.setForeground(Color.red);
+        score.setBounds(5, 235, 100, 20);
+        score.setText("Wynik: 0pkt");
+
+        strawberry.setIcon(new ImageIcon(Constans.STRAWBERRY));
+        strawberry.setBounds(5, 265, 20, 20);
+
+        pointsStrawberry.setText(" +5pkt");
+        pointsStrawberry.setBounds(30, 265, 50, 20);
+
+        apple.setIcon(new ImageIcon(Constans.APPLE));
+        apple.setBounds(5, 290, 20, 20);
+
+        pointsApple.setText(" +25pkt");
+        pointsApple.setBounds(30, 290, 50, 20);
+
+        mouse.setIcon(new ImageIcon(Constans.MOUSE));
+        mouse.setBounds(5, 315, 20, 20);
+
+        pointsMouse.setText(" + 50pkt");
+        pointsMouse.setBounds(30, 315, 60, 20);
+
+        endGame.setBackground(Color.gray);
+        endGame.setForeground(Color.yellow);
+        endGame.setBounds(5, 365, 100, 30);
+        endGame.addActionListener(this);
+
+        board.setBounds(110, 0, 400, 400);
+
     }
 
     private void setWindowProperties() {
