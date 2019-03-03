@@ -25,9 +25,9 @@ public class Snake extends JFrame implements ActionListener {
 
     private void initButtons() {
         logo = new JLabel();
-        startGame = new JButton("Uruchom");
-        pause = new JButton("Pauza");
-        newGame = new JButton("Nowa gra");
+        startGame = new JButton(Constans.START);
+        pause = new JButton(Constans.PAUZA);
+        newGame = new JButton(Constans.NEW_GAME);
         score = new JLabel();
         strawberry = new JLabel();
         pointsStrawberry = new JLabel();
@@ -35,7 +35,7 @@ public class Snake extends JFrame implements ActionListener {
         pointsApple = new JLabel();
         mouse = new JLabel();
         pointsMouse = new JLabel();
-        endGame = new JButton("Koniec");
+        endGame = new JButton(Constans.END);
         board = new Board(this);
 
         add(board);
@@ -72,12 +72,12 @@ public class Snake extends JFrame implements ActionListener {
         score.setBackground(Color.gray);
         score.setForeground(Color.red);
         score.setBounds(5, 235, 100, 20);
-        score.setText("Wynik: 0pkt");
+        score.setText(Constans.SCORE);
 
         strawberry.setIcon(new ImageIcon(Constans.STRAWBERRY));
         strawberry.setBounds(5, 265, 20, 20);
 
-        pointsStrawberry.setText(" +5pkt");
+        pointsStrawberry.setText(Constans.PKTS_5);
         pointsStrawberry.setBounds(30, 265, 50, 20);
 
         apple.setIcon(new ImageIcon(Constans.APPLE));
@@ -107,7 +107,7 @@ public class Snake extends JFrame implements ActionListener {
     }
 
     private void setWindowProperties() {
-        setTitle("Snake");
+        setTitle(Constans.TITLE);
         setSize(515, 428);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);

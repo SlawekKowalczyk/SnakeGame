@@ -14,15 +14,11 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     private final int WIDTH = 400;
     private final int HEIGHT = 400;
 
-    private final List<Integer> x_SNAKE = new ArrayList<Integer>();
-    private final List<Integer> y_SNAKE = new ArrayList<Integer>();
+    private final List<Integer> x_SNAKE = new ArrayList<>();
+    private final List<Integer> y_SNAKE = new ArrayList<>();
 
     private final int SQUARE_SIZE = 20;
     private final int RAND_POS = 19;
-
-    private final int strawberryPoint = 5;
-    private final int applePoint = 25;
-    private final int mousePoint = 50;
 
     private int snakeLength;
     private int score;
@@ -46,13 +42,16 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     public Board(Snake snake) {
         this.snake = snake;
         addKeyListener(this);
-        setBackground(Color.BLACK);
-        setFocusable(true);
-
-        setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        setProperties();
         loadImage();
         initGame();
         timer = new Timer(SPEED, this);
+    }
+
+    private void setProperties() {
+        setBackground(Color.BLACK);
+        setFocusable(true);
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
     }
 
     private void initGame() {
@@ -73,8 +72,8 @@ public class Board extends JPanel implements ActionListener, KeyListener {
         ImageIcon iiSnake = new ImageIcon(Constans.SNAKE);
         iSnake = iiSnake.getImage();
 
-        ImageIcon iiTruskawka = new ImageIcon(Constans.STRAWBERRY);
-        iStrawberry = iiTruskawka.getImage();
+        ImageIcon iiStrawberry = new ImageIcon(Constans.STRAWBERRY);
+        iStrawberry = iiStrawberry.getImage();
 
         ImageIcon iiApple = new ImageIcon(Constans.APPLE);
         iApple = iiApple.getImage();
@@ -118,7 +117,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     }
 
     private void gameOver(Graphics g) {
-        String gameEnd = "Game Over";
+        String gameEnd = Constans.GAME_OVER;
         Font font = new Font("Helvetica", Font.BOLD, 20);
 
         g.setColor(Color.red);
@@ -128,7 +127,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
     }
 
     private void youWin(Graphics g) {
-        String gameEnd = "You Win";
+        String gameEnd = Constans.YOU_WIN;
         Font font = new Font("Helvetica", Font.BOLD, 20);
 
         g.setColor(Color.red);
@@ -165,9 +164,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
             } else {
                 flag = true;
             }
-
         }
-
     }
 
     public void mouseLocation() {
@@ -215,6 +212,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
             x_SNAKE.add(x_SNAKE.get(1));
             y_SNAKE.add(y_SNAKE.get(1));
             strawberryLocation();
+            int strawberryPoint = 5;
             score += strawberryPoint;
             snake.setScore(score);
         }
@@ -227,6 +225,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
                 x_SNAKE.add(x_SNAKE.get(1));
                 y_SNAKE.add(y_SNAKE.get(1));
                 appleLocation();
+                int applePoint = 25;
                 score += applePoint;
                 snake.setScore(score);
             }
@@ -240,6 +239,7 @@ public class Board extends JPanel implements ActionListener, KeyListener {
                 x_SNAKE.add(x_SNAKE.get(1));
                 y_SNAKE.add(y_SNAKE.get(1));
                 mouseLocation();
+                int mousePoint = 50;
                 score += mousePoint;
                 snake.setScore(score);
             }
@@ -303,10 +303,6 @@ public class Board extends JPanel implements ActionListener, KeyListener {
 
     public Timer getTimer() {
         return timer;
-    }
-
-    public int getScore() {
-        return score;
     }
 
     @Override
